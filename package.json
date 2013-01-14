@@ -1,0 +1,23 @@
+{
+  "name": "collide-2d-tilemap",
+  "version": "0.0.0",
+  "description": "2d tilemap collisions made simple-ish",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisdickinson/collide-2d-tilemap"
+  },
+  "keywords": [
+    "collision",
+    "2d",
+    "games",
+    "aabb",
+    "tilemap"
+  ],
+  "author": "Chris Dickinson <chris@neversaw.us>",
+  "license": "MIT",
+  "gitHead": "91c9efaec78ab7739194f5336a5cabe48d1be9d0"
+}
