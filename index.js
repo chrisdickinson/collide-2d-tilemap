@@ -1,8 +1,14 @@
-module.exports = function(field, tilesize, dimensions) {
+module.exports = function(field, tilesize, dimensions, offset) {
   dimensions = dimensions || [ 
     Math.sqrt(field.length) >> 0
   , Math.sqrt(field.length) >> 0
   ] 
+
+  offset = offset || [
+    0
+  , 0
+  , 0
+  ]
 
   field = typeof field === 'function' ? field : function(x, y) {
     return this[x + y * dimensions[1]]
@@ -26,10 +32,10 @@ module.exports = function(field, tilesize, dimensions) {
         , leading = box[posi ? 'max' : 'base'][axis] 
         , dir = posi ? 1 : -1
         , opposite_axis = +!axis
-        , start = (box.base[opposite_axis] / tilesize) >> 0
-        , end = Math.ceil(box.max[opposite_axis] / tilesize) >> 0
-        , tilespace = (leading / tilesize) >> 0
-        , tilespace_end = (((leading + vec[axis]) / tilesize) >> 0) + dir
+        , start = Math.floor(box.base[opposite_axis] / tilesize)|0
+        , end = Math.ceil(box.max[opposite_axis] / tilesize)|0
+        , tilespace = Math.floor(leading / tilesize)|0
+        , tilespace_end = (Math.floor((leading + vec[axis]) / tilesize)|0) + dir
         , done = false
         , edge_vector
         , edge
@@ -43,9 +49,9 @@ module.exports = function(field, tilesize, dimensions) {
       //         to modify the `vec` in-flight.
       // once we're done translate the box to the vec results
       for(var i = tilespace; !done && i !== tilespace_end; i += dir) {
-        if(i < 0 || i >= dimensions[axis]) continue
+        if(i < offset[axis] || i >= dimensions[axis]) continue
         for(var j = start; j !== end; ++j) {
-          if(j < 0 || j >= dimensions[opposite_axis]) continue
+          if(j < offset[opposite_axis] || j >= dimensions[opposite_axis]) continue
 
           coords[axis] = i
           coords[opposite_axis] = j
